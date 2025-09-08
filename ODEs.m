@@ -1,4 +1,4 @@
-function deriv = ODEs(t,y,Param)
+function deriv = ODEs(t,y,Param, I_n, I_a, VC)
 
 % Define Parameters
 Vc2n             = Param(1);
@@ -131,8 +131,6 @@ degRecBySOCS     = Param(127);
 degARCBySOCS     = Param(128);
 kinhBySOCS       = Param(129);
 
-global isg_t; global isg_n; global vc; 
-
 
 % Define species 
 
@@ -220,23 +218,23 @@ f_CM   = 1 - exp(-(t/tau)^4);
  
 RC_form_rate = (k_c) * R_cyt * P_NS *( (f_CM) - ( RC_CM/rcsat ));
     
-dV_E    =  (k_a/(1 + isg_t*ISGav))*P_S*R_cyt - mu_V_E*V_E;
+dV_E    =  (k_a/(1 + I_a*ISGav))*P_S*R_cyt - mu_V_E*V_E;
 
-dV_0    =  (-k_en/(1 + isg_t*ISGav))*V_0;
+dV_0    =  (-k_en/(1 + I_a*ISGav))*V_0;
 
-dV_I    =  (k_en/(1 + isg_t*ISGav))*V_0 - (k_f/(1 + isg_t*ISGav))*V_I - mu_V_I*V_I;
+dV_I    =  (k_en/(1 + I_a*ISGav))*V_0 - (k_f/(1 + I_a*ISGav))*V_I - mu_V_I*V_I;
 
-dR_cyt    =  (k_e)*R_CM - (k_a/(1 + isg_t*ISGav))*P_S*R_cyt - mu_r*(1 + (isg_t*ISGav))*R_cyt - RC_form_rate + (k_f/(1 + isg_t*ISGav))*V_I;
+dR_cyt    =  (k_e)*R_CM - (k_a/(1 + I_a*ISGav))*P_S*R_cyt - mu_r*(1 + (I_a*ISGav))*R_cyt - RC_form_rate + (k_f/(1 + I_a*ISGav))*V_I;
 
-dR_CM    =  (k_r/(1 + isg_t*ISGav))*RC_CM  - (k_e)*R_CM;
+dR_CM    =  (k_r/(1 + I_a*ISGav))*RC_CM  - (k_e)*R_CM;
 
-dP_S    =  (k_t/(1 + isg_t*ISGav))*R_cyt - (k_a/(1 + isg_t*ISGav))*nSP*P_S*R_cyt - mu_p*(1 + (isg_t*ISGav))*P_S;
+dP_S    =  (k_t/(1 + I_a*ISGav))*R_cyt - (k_a/(1 + I_a*ISGav))*nSP*P_S*R_cyt - mu_p*(1 + (I_a*ISGav))*P_S;
 
-dP_NS    =  (k_t/(1 + isg_t*ISGav))*R_cyt - RC_form_rate - mu_p*(1 + (isg_t*ISGav))*P_NS;
+dP_NS    =  (k_t/(1 + I_a*ISGav))*R_cyt - RC_form_rate - mu_p*(1 + (I_a*ISGav))*P_NS;
 
 dRC_CM    =  RC_form_rate - a_RC*RC_CM;
 
-dR_ds    =  a_RC*RC_CM + b_RIGI*aRIGI - mu_r*(1 + (isg_t*ISGav))*R_ds - k_RIGI*RIGI*R_ds;
+dR_ds    =  a_RC*RC_CM + b_RIGI*aRIGI - mu_r*(1 + (I_a*ISGav))*R_ds - k_RIGI*RIGI*R_ds;
 
 
 % NF-kB pathway & IRFs Pathway 
@@ -245,9 +243,9 @@ dRIGI 	 = k_rigi_synt - RIGI*mu_rigi + aRIGI*b_RIGI - RIGI*R_ds*k_RIGI + ISGav_m
 
 daRIGI 	 = RIGI*R_ds*k_RIGI - aRIGI*mu_rigi - aRIGI*b_RIGI ;
 
-dMAVS 	 = aMAVS*b_MAVS - MAVS*aRIGI*(k_MAVS/(1 + (vc*P_NS)));
+dMAVS 	 = aMAVS*b_MAVS - MAVS*aRIGI*(k_MAVS/(1 + (VC*P_NS)));
  
-daMAVS 	 = MAVS*aRIGI*(k_MAVS/(1 + (vc*P_NS))) - aMAVS*b_MAVS ;
+daMAVS 	 = MAVS*aRIGI*(k_MAVS/(1 + (VC*P_NS))) - aMAVS*b_MAVS ;
 
 dIKKe 	 = b_prot*pIKKe - IKKe*aMAVS*k_IKKe_TBK1 ;
 
@@ -257,9 +255,9 @@ dTBK1 	 = b_prot*pTBK1 - TBK1*aMAVS*k_IKKe_TBK1 ;
 
 dpTBK1 	 = TBK1*aMAVS*k_IKKe_TBK1 - b_prot*pTBK1 ;
 
-dIRF3 	 = Vn2c*b_IRF3*pIRF3 - (IRF3*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1))*(1/(1 + vc*P_NS)) ;
+dIRF3 	 = Vn2c*b_IRF3*pIRF3 - (IRF3*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1))*(1/(1 + VC*P_NS)) ;
 
-dpIRF3 	 = (IRF3*Vc2n*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1))*(1/(1 + vc*P_NS)) - b_IRF3*pIRF3 ;
+dpIRF3 	 = (IRF3*Vc2n*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1))*(1/(1 + VC*P_NS)) - b_IRF3*pIRF3 ;
 
 dIKK 	 = aIKK*b_prot - IKK*aMAVS*k_IKK;
 
@@ -275,9 +273,9 @@ dNFkBc 	 = NFkBn*Vn2c*k_transp_NFkB - IkBac*NFkBc*k_inh_p65 - NFkBc*aIKK*k_act ;
 
 dIkBac 	 = k_expr_IkBa*(NFkBn + pNFkBn) - IkBac*mu_IkBa - IkBac*NFkBc*k_inh_p65 ;
 
-dIRF7   = k71*Vn2c*pIRF7 - IRF7*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1)*(1/(1 + vc*P_NS)) + k79*IRF7_mRNA - deg*IRF7;
+dIRF7   = k71*Vn2c*pIRF7 - IRF7*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1)*(1/(1 + VC*P_NS)) + k79*IRF7_mRNA - deg*IRF7;
 
-dpIRF7   = IRF7*Vc2n*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1)*(1/(1 + vc*P_NS)) - k71*pIRF7;
+dpIRF7   = IRF7*Vc2n*k_IRF3_IKKe_TBK1*(pIKKe + pTBK1)*(1/(1 + VC*P_NS)) - k71*pIRF7;
 
 dIFNb_mRNA 	 = B_o*Vn2c*k_TFBS_IFNb - IFNb_mRNA*mu_mRNA_IFNb + (Vn2c*k_mRNA_IFNb*(pIRF3 + pIRF7)*(NFkBn + pNFkBn)) ;
 
@@ -292,7 +290,7 @@ dIFNl_c 	 = IFNl_mRNA*k_trans_IFNl - IFNl_c*mu_IFNl ;
 
 % JAK|STAT Pathway
 
-dJAK 	 = ARC*k32 + RJC*k4 + ARC*isg_n*ISGn*k69 - JAK*IFNAR2*k3 ;
+dJAK 	 = ARC*k32 + RJC*k4 + ARC*I_n*ISGn*k69 - JAK*IFNAR2*k3 ;
 
 dRJC 	 = IFNAR_d*k6 - RJC*k4 + JAK*IFNAR2*k3 - IFNex*RJC*RTC*k5 ;
 
@@ -306,29 +304,29 @@ dIFNex 	 = IFNAR_d*k6 + ks*IFN_c - IFNex*RJC*RTC*k5 ;
 
 dSTAT2c 	 = ARC_STAT2c*k10 + ISGF3_CP*k40 - STAT2c*k58 + STAT2c_IRF9*k36 + STAT2c_IRF9*k61 + PSC_CP*k43 - ARC*STAT2c*k9 - IRF9c*STAT2c*k60 + STAT2n*Vn2c*k59 ;
 
-dTYK 	 = ARC*k32 + RTC*k2 + ARC*isg_n*ISGn*k69 - IFNAR1*TYK*k1 ;
+dTYK 	 = ARC*k32 + RTC*k2 + ARC*I_n*ISGn*k69 - IFNAR1*TYK*k1 ;
 
 dRTC 	 = IFNAR_d*k6 - RTC*k2 + IFNAR1*TYK*k1 - IFNex*RJC*RTC*k5 ;
 
-dARC 	 = ARC_STAT2c*k10 - ARC*k34 - ARC*k32 + ARC_STAT12c*(k13)*(1/(1 + vc*P_NS)) + IFNAR_d*(k7/(1+isg_n*kinhBySOCS*ISGn)) - ARC*isg_n*ISGn*k69 - ARC*STAT2c*k9 - ARC*STAT2c_IRF9*k8 - isg_n*degARCBySOCS*ISGn*ARC ;
+dARC 	 = ARC_STAT2c*k10 - ARC*k34 - ARC*k32 + ARC_STAT12c*(k13)*(1/(1 + VC*P_NS)) + IFNAR_d*(k7/(1+I_n*kinhBySOCS*ISGn)) - ARC*I_n*ISGn*k69 - ARC*STAT2c*k9 - ARC*STAT2c_IRF9*k8 - I_n*degARCBySOCS*ISGn*ARC ;
 
-dIFNAR1 	 = ARC*k32 + RTC*k2 + ARC*isg_n*ISGn*k69 - IFNAR1*TYK*k1 - isg_n*degRecBySOCS*IFNAR1*ISGn ;
+dIFNAR1 	 = ARC*k32 + RTC*k2 + ARC*I_n*ISGn*k69 - IFNAR1*TYK*k1 - I_n*degRecBySOCS*IFNAR1*ISGn ;
 
-dIFNAR2 	 = ARC*k32 + RJC*k4 + ARC*isg_n*ISGn*k69 - JAK*IFNAR2*k3 - isg_n*degRecBySOCS*IFNAR2*ISGn ;
+dIFNAR2 	 = ARC*k32 + RJC*k4 + ARC*I_n*ISGn*k69 - JAK*IFNAR2*k3 - I_n*degRecBySOCS*IFNAR2*ISGn ;
 
-dIFNAR_d 	 = ARC*k34 - IFNAR_d*k6 - IFNAR_d*(k7/(1+isg_n*kinhBySOCS*ISGn)) + IFNex*RJC*RTC*k5 ;
+dIFNAR_d 	 = ARC*k34 - IFNAR_d*k6 - IFNAR_d*(k7/(1+I_n*kinhBySOCS*ISGn)) + IFNex*RJC*RTC*k5 ;
 
 dIRF9c 	 = k27 - IRF9c*k29 - IRF9c*k66 + ISGF3c*k15 + ISGF3_CP*k40 + STAT2c_IRF9*k61 + k70*IRF9_mRNA_c + ARC*STAT2c_IRF9*k8 - IRF9c*STAT2c*k60 - IRF9c*PSC_c*k14 + IRF9n*Vn2c*k67 ;
 
 dARC_STAT2c 	 = ARC_STAT12c*k12 - ARC_STAT2c*k10 + ARC*STAT2c*k9 + ARC*STAT2c_IRF9*k8 - ARC_STAT2c*STAT1c*k11 ;
 
-dARC_STAT12c 	 = ARC_STAT2c*STAT1c*k11 - ARC_STAT12c*k13*(1/(1 + vc*P_NS)) - ARC_STAT12c*k12 ;
+dARC_STAT12c 	 = ARC_STAT2c*STAT1c*k11 - ARC_STAT12c*k13*(1/(1 + VC*P_NS)) - ARC_STAT12c*k12 ;
 
 dSTAT2c_IRF9 	 = IRF9c*STAT2c*k60 - STAT2c_IRF9*k61 - STAT2c_IRF9*k64 - ARC*STAT2c_IRF9*k8 - STAT2c_IRF9*k36 + STAT2n_IRF9*Vn2c*k65 ;
 
 dISGF3c 	 = ISGF3_CP*k39 - ISGF3c*k16 - ISGF3c*k15 - CP*ISGF3c*k38 + IRF9c*PSC_c*k14 + ISGF3n*Vn2c*k17 ;
 
-dPSC_c 	 = ARC_STAT12c*k13*(1/(1 + vc*P_NS)) + ISGF3c*k15 - PSC_c*k18 + PSC_CP*k42 - CP*PSC_c*k41 - IRF9c*PSC_c*k14 + PSC_n*Vn2c*k19 ;
+dPSC_c 	 = ARC_STAT12c*k13*(1/(1 + VC*P_NS)) + ISGF3c*k15 - PSC_c*k18 + PSC_CP*k42 - CP*PSC_c*k41 - IRF9c*PSC_c*k14 + PSC_n*Vn2c*k19 ;
 
 dISGF3_CP 	 = CP*ISGF3c*k38 - ISGF3_CP*k40 - ISGF3_CP*k39 ;
 
