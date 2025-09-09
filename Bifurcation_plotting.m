@@ -1,3 +1,5 @@
+%This code varies the values of immune activation over a  range and then calculates new threshold values of viral antagonism at each of those values. This results in a bifurcation front (Figure 2b in the main text)
+
 clear; close all; clc;
 
 load('param.mat');
