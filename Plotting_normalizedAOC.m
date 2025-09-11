@@ -1,7 +1,7 @@
 % =============================================================
 %  IFN-HCV nAOC Analysis
 %  Loads pre-infection IFN simulation results across multiple 
-%  viral antagonism (VC here). Computes area over curve (AOC) 
+%  viral antagonism strength (VC here) values. Computes area over curve (AOC) 
 %  relative to a viral load threshold during the pre-treatment 
 %  window (t ≤ 0), normalizes AOC to a reference VC, and 
 %  visualizes the normalized AOC (nAOC) as a heatmap.

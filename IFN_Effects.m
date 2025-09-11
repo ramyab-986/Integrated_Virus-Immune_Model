@@ -4,7 +4,7 @@
 %   1) Pre-infection IFN treatment
 %   2) IFN at time of infection (0 h)
 %   3) Post-infection IFN treatment
-%  Results are computed for multiple viral antagonism (VC here) values and 
+%  Results are computed for multiple viral antagonism strength (VC here) values and 
 %  visualized as heatmaps of final viral loads.
 %% =============================================================
 
