@@ -1,3 +1,8 @@
+%% Description
+%This MATLAB script generates randomized parameter sets (can be extended to initial conditions as well) for the model, using Latin Hypercube Sampling (LHS). 
+%The results are saved as bounds.mat
+
+%%
 clear; clc; close all; 
 
 iter_prm = 25000; 

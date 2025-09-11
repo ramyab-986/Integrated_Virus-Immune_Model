@@ -14,7 +14,7 @@ load('SteadyState_120h.mat', 'Tss', 'Yss');
 IFN_conditions = [0, 0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]; 
 timearray = [4, 8, 16, 24:24:720]*60; 
 
-I_n = 1; I_a = 1; VC = 0.439;
+I_n = 1; I_a = 1.01388; VC = 0.439;
 t_start = 0;
 
 % Parameter to vary

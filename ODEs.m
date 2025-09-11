@@ -94,7 +94,7 @@ mu_IkBa          = Param(90);
 mu_mRNA_IFNa     = Param(91);
 mu_mRNA_IFNb     = Param(92);
 mu_mRNA_IFNl     = Param(93);
-mu_mRNA_mx1      = Param(94);
+mu_ISG_RNA      = Param(94);
 mu_mx1           = Param(95);
 mu_rigi          = Param(96);
 k_en             = Param(97);
@@ -360,7 +360,7 @@ dSTAT2n_IRF9 	 = IRF9n*STAT2n*k62 - STAT2n_IRF9*k63 - STAT2n_IRF9*k65 - STAT2n_I
 
 dISGF3_NP 	 = ISGF3n*NP*k47 - ISGF3_NP*k49 - ISGF3_NP*k48 ;
 
-dISGav_mRNA 	 = B_o*Vn2c*k_mx1_mRNA - ISGav_mRNA*mu_mRNA_mx1 + Vn2c*k_mRNA_MX1*pIRF3 ;
+dISGav_mRNA 	 = B_o*Vn2c*k_mx1_mRNA - ISGav_mRNA*mu_ISG_RNA + Vn2c*k_mRNA_MX1*pIRF3 ;
 
 dISGav 	 = ISGav_mRNA*k_transISG - ISGav*mu_mx1 ;
 

@@ -1,3 +1,24 @@
+%% ========================================================================
+% Script: Viral Titre with Parameter Sampling
+%
+% Description:
+% This script analyzes the steady-state simulation results stored in 
+% 'session.mat' to extract and visualize key system outputs. 
+%
+% Key Steps:
+% - Loads steady-state simulation results (SS) and baseline parameters.
+% - Extracts viral titre (VT) and ISGav values across all parameter sets 
+%   applying log10 transformation.
+% - Saves extracted data into 'VT_ISGav.mat' for reuse.
+% - Fits a Gaussian Mixture Model (GMM) to the viral titre distribution 
+%   to classify populations into high and low viral load groups.
+% - Visualizes the distribution of viral titre with histogram and GMM fit.
+% - Computes correlation coefficients between each model parameter and 
+%   viral titre.
+% - Ranks parameters by correlation strength and visualizes the top and 
+%   bottom 10 correlations with a bar plot.
+% ========================================================================
+
 close all; clear; clc;
 
 %% Load data

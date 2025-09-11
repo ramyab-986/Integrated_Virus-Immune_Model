@@ -105,7 +105,7 @@ load('param.mat')
 y0 = Yss(end,:);
 y0(2) = 100;           % MOI =10;  
 
-tend = 96*60;
+tend = 48*60;
 tspan = linspace(0,tend);
 
 c = [0, 1];
@@ -132,7 +132,7 @@ for i = 1:size(c,2)
 
             [T,Y] = ode23s(@(t,y) ODEs(t, y, param, I_n, I_a, VC), tspan,y0);
             disp(1)
-            % save(['CMN_96h_VC', num2str(VC), '_isgt', num2str(I_a),'_isgn',num2str(I_n), '.mat'], 'T', 'Y');
+            save(['HCV_48h_VC', num2str(VC), '_Ia', num2str(I_a),'_In',num2str(I_n), '.mat'], 'T', 'Y');
 
             T = T/60;
 
@@ -150,7 +150,7 @@ for i = 1:size(c,2)
                 set(gca,'LineWidth',1.5)
                 set(gca, 'Color', 'none')
                 set(gca,'TickLabelInterpreter','Latex')
-                xlim([4 96])
+                xlim([4 48])
                 xticks([4 8 16 24 36 48])
                 legend('Location','bestoutside')
                 % saveas(gcf, var_names{1,m}, 'fig')

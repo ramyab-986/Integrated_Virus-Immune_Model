@@ -1,3 +1,16 @@
+%% ========================================================================
+% Script: Steady-State Simulation with Parameter Sampling
+%
+% Description:
+% This script runs steady-state simulations of the model. 
+% Parameter sets (previously generated using Latin Hypercube Sampling 
+% and stored in 'bounds.mat') and initial conditions
+% are used as inputs. For each parameter set, the 
+% system of ODEs is numerically solved until a defined simulation time 
+% and results are stored in 'session.mat'. 
+% 
+% ========================================================================
+
 clear all; clc; close all; warning off; format shortG;
 
 %% Housekeeping

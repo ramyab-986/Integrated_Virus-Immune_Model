@@ -1,6 +1,5 @@
 %% Import data from spreadsheet
 
-
 %% Set up the Import Options and import the data
 opts = spreadsheetImportOptions("NumVariables", 129);
 

@@ -1,7 +1,10 @@
 %% Bifurcation Point Sensitivity Analysis
 % This script performs three analyses:
 % 1. Varying each parameter in 'param' (except param 1 and 2; volume ratios- Vc2n and Vn2c are not being changed).
-% 2. Computing sensitivity using a five-point central finite difference.
+% 2. Computing sensitivity of viral antagonism using a five-point central finite difference.
+% 3. Plotting top parameters 
+%
+% This is extended to immune activity values by appropriate modification. 
 
 clear; close all; clc;
 
